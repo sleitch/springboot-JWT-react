@@ -44,15 +44,7 @@ export default function HomePage() {
           >
             Register
           </Button>
-          <Button
-            component={RouterLink}
-            to="/forgot-password"
-            size="small"
-            sx={{ mx: 1, textTransform: 'none' }}
-            color="primary"
-          >
-            Forgot Password
-          </Button>
+         
         </Box>
       </Box>
 
