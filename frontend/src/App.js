@@ -6,6 +6,7 @@ import Profile from './components/Profile';
 import Logout from './components/Logout';
 import RegisterUser from './components/RegisterUser';
 import ResetPassword from './components/ResetPassword';
+import HomePage from './components/HomePage';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const isAuthenticated = !!localStorage.getItem('user');
@@ -39,12 +40,7 @@ function App() {
             </>
           ) : (
             <>
-                  <NavLink to="/login">Login</NavLink>
-
-                  {'\u00A0'}                  <NavLink to="/register">Register</NavLink>
-                  {'\u00A0'}
-                  <NavLink to="/profile">Profile (log in)</NavLink>
-
+              
              
             </>
           )}
@@ -56,9 +52,7 @@ function App() {
           <Route path="/forgot-password" component={ForgotPassword} />
           <Route path="/reset-password" component={ResetPassword} />
           <PrivateRoute path="/profile" component={Profile} />
-          <Route path="/" exact>
-            <h1>Welcome to User One</h1>
-          </Route>
+          <Route path="/" exact component={HomePage} />
         </Switch>
       </div>
     </BrowserRouter>
