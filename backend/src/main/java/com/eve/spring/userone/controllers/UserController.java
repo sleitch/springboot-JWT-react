@@ -37,7 +37,18 @@ public class UserController {
     public ResponseEntity<?> updateProfile(@RequestBody UserOne userIn) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        UserOne updatedUser = userService.updateUser(userIn);
+
+        UserOne existingUser = userService.getUserById(userDetails.getId())
+            .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Only update allowed fields
+        existingUser.setEmail(userIn.getEmail());
+        existingUser.setDisplayName(userIn.getDisplayName());
+        existingUser.setFirstName(userIn.getFirstName());
+        existingUser.setLastName(userIn.getLastName());
+        // Do NOT update password here
+
+        UserOne updatedUser = userService.updateUser(existingUser);
         return ResponseEntity.ok(updatedUser);
     }
 }

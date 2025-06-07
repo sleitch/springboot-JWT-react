@@ -12,41 +12,64 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.eve.spring.userone.models.UserOne;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+/**
+ * 
+ * @author sleitch
+ */
 public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
 
     private Long id;
     private String username;
     private String email;
+    private String firstName;
+    private String lastName;
+    private String displayName;
     @JsonIgnore
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(Long id, String username, String email, String password,
-            Collection<? extends GrantedAuthority> authorities) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.authorities = authorities;
-    }
+  
+    public UserDetailsImpl(UserOne user, List<GrantedAuthority> authorities2) {
+    	 this.id = user.getId();
+         this.username =  user.getUsername();
+         this.email =  user.getEmail();
+         this.password = user.getPwd();
+         this.displayName =user.getDisplayName();
+         this.firstName = user.getFirstName();
+         this.lastName = user.getLastName();
+         this.authorities = authorities2;
+      }
 
-    public static UserDetailsImpl build(UserOne user) {
+	public static UserDetailsImpl build(UserOne user) {
     	
     	SimpleGrantedAuthority role = new SimpleGrantedAuthority(user.getRole());
     	
     	 List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
     	 authorities.add(role);    			               
 
-        return new UserDetailsImpl(
-                user.getId(),
-                user.getUsername(),
-                user.getEmail(),
-                user.getPwd(),
-                authorities);
+    	 return new UserDetailsImpl(user,authorities);
     }
+    
+    
 
-    public Long getId() {
+    public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public Long getId() {
         return id;
     }
 
