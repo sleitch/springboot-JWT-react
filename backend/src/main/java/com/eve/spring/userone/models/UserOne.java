@@ -34,7 +34,6 @@ public class UserOne implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "user_num")
 	private int userNum;
 
